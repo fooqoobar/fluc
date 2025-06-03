@@ -1,6 +1,7 @@
 # Fluc Source code
 Note: This project is not finished and has a ton of bugs.  
 Do whatever you want to do with this I don't need credits.  
+Working version code/versions/fluc1.tar.  
 
 ## Credits
 Everything is written by me (fooqoo bar aka syncraptorz, bxod) and there are no other contributors.  
