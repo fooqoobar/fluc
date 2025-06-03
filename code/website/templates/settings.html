@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:url" content="https://uid.wtf">
+    <meta property="og:title" content="Fluc: Settings">
+    <meta property="og:image" content="https://uid.wtf/assets/media/logo.png">
+    <meta property="og:description" content="Welcome to Fluc; The fastest bot on Discord awaits your command!">
+
+    <title>Fluc: Settings</title>
+    <link rel="stylesheet" href="/assets/css/animation.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/input.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+</head>
+<body>
+    {% set maxlen = 30 %}
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="{{ category }}-message">
+        <span class="message-close">×</span>
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    
+    <h1>Setting Customization</h1>
+    <p>Expand the category you want to customize!</p>
+    <br>
+    <br>
+
+    <div class="inputs">
+        <details data="prefixes">
+            <summary>Customize Prefixes</summary>
+            <div>
+                <p>You invoke bot commands with prefixes.</p>
+                <br>
+                <br>
+                <p>Prefix:</p>
+                <div class="input-list">
+                    {% set ls = settings.get('prefixes', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="prefixes" type="text" _maxlength="10" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="prefixes" type="text" _maxlength="10" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="prefixes" type="text" _maxlength="10" _required>
+                    {% endif %}
+                </div>
+            </div>
+        </details>
+    
+        <details data="reasons">
+            <summary>Customize Reasons</summary>
+            <div>
+                <p>Reasons will appear in the audit logs when actions are performed.</p>
+                <br>
+                <br>
+                <p>Reasons that will be shown in the audit logs:</p>
+                <div class="input-list">
+                    {% set ls = settings.get('reasons', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="reasons" type="text" _maxlength="512" value="{{ item }}">
+                    {% else %}
+                    <input data="reasons" type="text" _maxlength="512" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="reasons" type="text" _maxlength="512">
+                    {% endif %}
+            </div>
+        </details>
+    
+        <details data="channel">
+            <summary>Channel Settings</summary>
+            <div>
+                <p>These settings apply when creating or editing channels.</p>
+                <br>
+                <br>
+                <p>Channel names:</p>
+                <div class="input-list">
+                    {% set ls = settings['channel'].get('name', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="name" type="text" _maxlength="100" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="name" type="text" _maxlength="100" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="name" type="text" _maxlength="100" _required>
+                    {% endif %}
+                </div>
+                <br>
+                <p>Channel topics:</p>
+                <div class="input-list">
+                    {% set ls = settings['channel'].get('topics', []) %}
+                    {% for topic in ls %}
+                    {% if topic == ls[0] %}
+                    <input data="topic" type="text" _maxlength="1024" value="{{ topic }}">
+                    {% else %}
+                    <input data="topic" type="text" _maxlength="1024" value="{{ topic }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="topic" type="text" _maxlength="1024">
+                    {% endif %}
+                </div>
+                <br>
+                <p>Age restricted:</p>
+                <div class="checkbox-list">
+                    {% set ls = settings['channel'].get('nsfw', []) %}
+                    {% if ls | length == 2 %}
+                    <input data="nsfw" type="checkbox" checked>
+                    <input data="nsfw" type="checkbox">
+                    {% elif ls | length == 1 and ls[0] == true %}
+                    <input data="nsfw" type="checkbox" checked>
+                    {% elif ls | length <= 2 %}
+                    <input data="nsfw" type="checkbox">
+                    {% endif %}
+                </div>
+                <br>
+                <p>Channel slowmode delay in seconds:</p>
+                <div class="input-list">
+                    {% set ls = settings['channel'].get('slowmode_delay', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="slowmode_delay" type="number" max="21600" value="{{ item }}">
+                    {% else %}
+                    <input data="slowmode_delay" type="number" max="21600" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="slowmode_delay" type="number" max="21600">
+                    {% endif %}
+                </div>
+            </div>
+        </details>
+        
+        <details data="role">
+            <summary>Role Settings</summary>
+            <div>
+                <p>These settings apply when creating or editing roles.</p>
+                <br>
+                <br>
+                <p>Role name:</p>
+                <div class="input-list">
+                    {% set ls = settings['role'].get('name', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="name" type="text" _maxlength="100" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="name" type="text" _maxlength="100" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="name" type="text" _maxlength="100" _required>
+                    {% endif %}
+                </div>
+                <br>
+                <p>Role permissions:</p>
+                <p>Note: You can use <a href="https://discordapi.com/permissions.html" target="_blank" rel="noopener">this tool</a> to get values of Discord permissions!</p>
+                <div class="input-list">
+                    {% set ls = settings['role'].get('permissions', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="permissions" check="permissions" type="number" value="{{ item }}">
+                    {% else %}
+                    <input data="permissions" check="permissions" type="number" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="permissions" check="permissions" type="number">
+                    {% endif %}
+                </div>
+                <br>
+                <p>Role color (HEX value):</p>
+                <div class="input-list">
+                    {% set ls = settings['role'].get('color', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="color" type="color" value="{{ item }}">
+                    {% else %}
+                    <input data="color" type="color" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="color" type="color">
+                    {% endif %}
+                </div>
+                <br>
+                <p>Hoist:</p>
+                <div class="checkbox-list">
+                    {% set ls = settings['role'].get('hoist', []) %}
+                    {% if ls | length == 2 %}
+                    {% if ls[0] == ls[1] and ls[0] == False %}
+                    <input data="hoist" type="checkbox">
+                    {% elif ls[0] == ls[1] and ls[0] == True %}
+                    <input data="hoist" type="checkbox" checked>
+                    {% elif ls[0] != ls[1] %}
+                    <input data="hoist" type="checkbox">
+                    <input data="hoist" type="checkbox" checked>
+                    {% endif %}
+                    {% elif ls | length == 1 %}
+                    {% if ls[0] == True %}
+                    <input data="hoist" type="checkbox" checked>
+                    {% elif ls[0] == False %}
+                    <input data="hoist" type="checkbox">
+                    {% endif %}
+                    {% else %}
+                    <input data="hoist" type="checkbox">
+                    {% endif %}
+                </div>
+                <br>
+                <p>Mentionable:</p>
+                <div class="checkbox-list">
+                    {% set ls = settings['role'].get('mentionable', []) %}
+                    {% if ls | length == 2 %}
+                    {% if ls[0] == ls[1] and ls[0] == False %}
+                    <input data="mentionable" type="checkbox">
+                    {% elif ls[0] == ls[1] and ls[0] == True %}
+                    <input data="mentionable" type="checkbox" checked>
+                    {% elif ls[0] != ls[1] %}
+                    <input data="mentionable" type="checkbox">
+                    <input data="mentionable" type="checkbox" checked>
+                    {% endif %}
+                    {% elif ls | length == 1 %}
+                    {% if ls[0] == True %}
+                    <input data="mentionable" type="checkbox" checked>
+                    {% elif ls[0] == False %}
+                    <input data="mentionable" type="checkbox">
+                    {% endif %}
+                    {% else %}
+                    <input data="mentionable" type="checkbox">
+                    {% endif %}
+                </div>
+            </div>
+        </details>
+        
+        <details>
+            <summary>Webhook Settings</summary>
+            <div>
+                <p>These settings apply when creating/editing webhooks.</p>
+                <br>
+                <br>
+                <p>Name:</p>
+                <div class="input-list">
+                    {% set ls = settings['webhook'].get('name', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="name" type="text" _maxlength="80" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="name" type="text" _maxlength="80" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="name" type="text" _maxlength="80" _required>
+                    {% endif %}
+                </div>
+            </div>
+        </details>
+        
+        <details data="emoji">
+            <summary>Emoji Settings</summary>
+            <div>
+                <p>These settings apply when creating emojis.</p>
+                <br>
+                <br>
+                <p>Emoji name:</p>
+                <div class="input-list">
+                    {% set ls = settings['emoji'].get('name', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="name" type="text" check="basic" _maxlength="32" _minlength="2" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="name" type="text" check="basic" _maxlength="32" _minlength="2" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="name" type="text" check="basic" _maxlength="32" _minlength="2" _required>
+                    {% endif %}
+                </div>
+                <br>
+                <p>Emoji image (URL)</p>
+                <div class="input-list">
+                    {% set ls = settings['emoji'].get('image', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="image" type="text" check="url" _maxlength="300"  value="{{ item }}" _required>
+                    {% else %}
+                    <input data="image" type="text" check="url" _maxlength="300"  value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="image" type="text" check="url" _maxlength="300" _required>
+                    {% endif %}
+                </div>
+            </div>
+        </details>
+        
+        <details data="sticker">
+            <summary>Sticker Settings</summary>
+            <div>
+                <p>These settings apply when creating stickers.</p>
+                <br>
+                <br>
+                <p>Sticker name:</p>
+                <div class="input-list">
+                    {% set ls = settings['sticker'].get('name', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="name" type="text" check="basic" _maxlength="30" _minlength="2" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="name" type="text" check="basic" _maxlength="30" _minlength="2" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="name" type="text" check="basic" _maxlength="30" _minlength="2" _required>
+                    {% endif %}
+                </div>
+                <br>
+                <p>Sticker description:</p>
+                <div class="input-list">
+                    {% set ls = settings['sticker'].get('description', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="description" type="text" _maxlength="100" value="{{ item }}">
+                    {% else %}
+                    <input data="description" type="text" _maxlength="100" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="description" type="text" _maxlength="100">
+                    {% endif %}
+                </div>
+                <br>
+                <p>Sticker emoji:</p>
+                <div class="input-list">
+                    {% set ls = settings['sticker'].get('emoji', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="emoji" check="emoji" type="text" _maxlength="3" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="emoji" check="emoji" type="text" _maxlength="3" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="emoji" check="emoji" type="text" _maxlength="3" _required>
+                    {% endif %}
+                </div>
+                <br>
+                <p>Sticker image (URL):</p>
+                <div class="input-list">
+                    {% set ls = settings['sticker'].get('image', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="image" check="url" type="text" _maxlength="300" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="image" check="url" type="text" _maxlength="300" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="image" check="url" type="text" _maxlength="300" _required>
+                    {% endif %}
+                </div>
+            </div>
+        </details>
+        
+        <details data="member">
+            <summary>Member Settings</summary>
+            <div>
+                <p>These settings apply when editing members.</p>
+                <br>
+                <br>
+                <p>Member nickname:</p>
+                <div class="input-list">
+                    {% set ls = settings['member'].get('nick', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="nick" type="text" _maxlength="32" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="nick" type="text" _maxlength="32" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="nick" type="text" _maxlength="32" _required>
+                    {% endif %}
+                </div>
+                <br>
+                <p>Timeout duration (seconds):</p>
+                <div class="input-list">
+                    {% set ls = settings['member'].get('timed_out_until', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="timed_out_until" type="number" max="2073600" value="{{ item }}">
+                    {% else %}
+                    <input data="timed_out_until" type="number" max="2073600" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="timed_out_until" type="number" max="2073600">
+                    {% endif %}
+                </div>
+            </div>
+        </details>
+        
+        <details data="guild">
+            <summary>Server Settings</summary>
+            <div>
+                <p>These settings apply when editing servers.</p>
+                <br>
+                <br>
+                <p>Server name:</p>
+                <div class="input-list">
+                    {% set ls = settings['guild'].get('name', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="name" type="text" _maxlength="100" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="name" type="text" _maxlength="100" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="name" type="text" _maxlength="100" _required>
+                    {% endif %}
+                </div>
+                <br>
+                <p>Server icon (URL)</p>
+                <div class="input-list">
+                    {% set ls = settings['guild'].get('icon', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="icon" type="text" _maxlength="300" check="url" value="{{ item }}">
+                    {% else %}
+                    <input data="icon" type="text" _maxlength="300" check="url" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="icon" type="text" _maxlength="300" check="url">
+                    {% endif %}
+                </div>
+            </div>
+        </details>
+    
+        <details data="message">
+            <summary>Message Settings</summary>
+            <div>
+                <p>These settings apply when the bot is sending messages (raiding).</p>
+                <br>
+                <br>
+                <p>Message content:</p>
+                <div class="input-list">
+                    {% set ls = settings['message'].get('content', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="content" type="text" _maxlength="1024" value="{{ item }}" _required>
+                    {% else %}
+                    <input data="content" type="text" _maxlength="1024" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="content" type="text" _maxlength="1024" _required>
+                    {% endif %}
+                </div>
+                <br>
+                <p>Webhook username:</p>
+                <div class="input-list">
+                    {% set ls = settings['message'].get('username', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="username" type="text" _maxlength="80" value="{{ item }}">
+                    {% else %}
+                    <input data="username" type="text" _maxlength="80" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="username" type="text" _maxlength="80">
+                    {% endif %}
+                </div>
+                <br>
+                <p>Webhook avatar (URL):</p>
+                <div class="input-list">
+                    {% set ls = settings['message'].get('avatar_url', []) %}
+                    {% for item in ls %}
+                    {% if item == ls[0] %}
+                    <input data="avatar_url" check="url" type="text" _maxlength="300" value="{{ item }}">
+                    {% else %}
+                    <input data="avatar_url" check="url" type="text" _maxlength="300" value="{{ item }}">
+                    {% endif %}
+                    {% endfor %}
+                    {% if not ls | length > maxlen %}
+                    <input data="avatar_url" check="url" type="text" _maxlength="300">
+                    {% endif %}
+                </div>
+                <br>
+                <p>Text-To-Speech:</p>
+                <div class="checkbox-list">
+                    {% set ls = settings['message'].get('tts', []) %}
+                    {% if ls | length == 2 %}
+                    {% if ls[0] == ls[1] and ls[0] == False %}
+                    <input data="tts" type="checkbox">
+                    {% elif ls[0] == ls[1] and ls[0] == True %}
+                    <input data="tts" type="checkbox" checked>
+                    {% elif ls[0] != ls[1] %}
+                    <input data="tts" type="checkbox">
+                    <input data="tts" type="checkbox" checked>
+                    {% endif %}
+                    {% elif ls | length == 1 %}
+                    {% if ls[0] == True %}
+                    <input data="tts" type="checkbox" checked>
+                    {% elif ls[0] == False %}
+                    <input data="tts" type="checkbox">
+                    {% endif %}
+                    {% else %}
+                    <input data="tts" type="checkbox">
+                    {% endif %}
+                </div>
+            </div>
+        </details>
+    </div>
+
+    <button id="save" type="button">Save Settings</button>
+    <button id="reset" type="button">Reset To Default</button>
+    
+    <p id="bottom-text">Click <a href="/">here</a> to return to main page</p>
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/input.js"></script>
+</body>
+</html>

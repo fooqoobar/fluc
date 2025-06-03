@@ -1,0 +1,101 @@
+<!--
+    Hi, skid! Well, this project is not meant to be open source,
+    but thanks to fucking developer tools it is. Happy skidding!
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:url" content="https://uid.wtf">
+    <meta property="og:title" content="Fluc: Home">
+    <meta property="og:image" content="https://uid.wtf/assets/media/logo.png">
+    <meta property="og:description" content="Welcome to Fluc; The fastest bot on Discord awaits your command!">
+
+    <title>Fluc: Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animation.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+</head>
+<body>
+    <div class="loading">
+        <h1>Loading...</h1>
+    </div>
+
+    <div class="enter">
+        <h1>Click Anywhere To Enter</h1>
+    </div>
+
+    <div class="bg"></div>
+
+    <audio class="audio" loop>
+        <source src="/assets/media/audio.mp3" type="audio/mp3">
+    </audio>
+    
+    <div class="volume-container">
+        <div class="volume-button">
+            <div class="volume-icon"><img src="/assets/media/music.svg" alt="music"></div>
+            <input aria-label="ihavenoideawhatthisisforitgavemeawarningsoenjoy" type="range" class="volume-slider">
+        </div>
+    </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="{{ category }}-message">
+            <span class="message-close">×</span>
+            {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="card">
+        {% if data['avatar'] %}
+        <img src="{{ data['avatar'] }}" alt="Avatar.png">
+        {% else %}
+        <img src="/assets/media/logo.png" alt="Fluc.png">
+        {% endif %}
+        <div class="title">
+            <h1>Welcome{% if data['name'] %} {{ data['name'] }}{% else %} to Fluc{% endif %}!</h1>
+        </div>
+        <p class="no-data" id="typewriter"></p>
+        <div class="buttons" >
+            <div class="no-data">
+                <button id="button-discord" type="button">
+                    Join Discord
+                </button>
+                <button id="button-team" type="button">
+                    Team
+                </button>
+                <button id="button-leaderboard" type="button">
+                    Leaderboard
+                </button>
+                <button id="button-log{% if data['id'] %}out{% else %}in{% endif %}" type="button">
+                    {% if data['id'] %}
+                    Log Out
+                    {% else %}
+                    Log In
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@1.37.0/tsparticles.min.js"></script>
+    <script src="assets/js/particles.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/index.js"></script>
+    <script src="assets/js/typewriter.js"></script>
+</body>
+</html>
