@@ -15,4 +15,3 @@ I was blackmailed and forced by a 14 year old kid on Discord.
 
 # What is Fluc 🤦‍♂️
 Small project I wrote basically Discord nuke/raid bot.
-Also in archive.tar / versions / fluc1.tar fully works (main bot)
