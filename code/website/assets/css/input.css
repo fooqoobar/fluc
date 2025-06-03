@@ -1,0 +1,51 @@
+body.modal-open {
+    overflow: hidden;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    z-index: 3;
+}
+
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 3px solid var(--neon);
+    border-radius: 10px;
+    padding: 5rem;
+    background-color: black;
+    /* This one keeps the close button in content */
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.modal-close {
+    position: fixed;
+    top: 12px;
+    right: 15px;
+    font-size: 3rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#reset {
+    color: red;
+}
+
+#reset:hover {
+    background-color: black;
+    box-shadow: 0 4px 30px red;
+}

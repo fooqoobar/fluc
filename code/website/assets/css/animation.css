@@ -1,0 +1,33 @@
+:root {
+    --neon: #489dd5
+}
+
+
+@keyframes glow {
+    0% {
+        filter: brightness(1) drop-shadow(0 0 10px white) drop-shadow(0 0 15px var(--neon));
+    }
+    25% {
+        filter: brightness(1) drop-shadow(0 0 15px white) drop-shadow(0 0 15px var(--neon));
+    }
+    50% {
+        filter: brightness(1) drop-shadow(0 0 20px white) drop-shadow(0 0 15px var(--neon));
+    }
+    75% {
+        filter: brightness(1) drop-shadow(0 0 15px white) drop-shadow(0 0 15px var(--neon));
+    }
+    100% {
+        filter: brightness(1) drop-shadow(0 0 10px white) drop-shadow(0 0 15px var(--neon));
+    }
+}
+
+@keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes backgroundGlow {
+    0% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+    50% { background-position: 100% 100%, 100% 100%, 0% 0%; }
+    100% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+}
