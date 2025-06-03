@@ -8,8 +8,6 @@ Everything is written by me (fooqoo bar aka syncraptorz, bxod) and there are no 
 ## Why?
 This is getting leaked anyways so I am doing it first.  
 I was blackmailed and forced by a 14 year old kid on Discord.  
-`archive-1.tar` and `archive (1).tar` has been modified by him.  
-`archive.rar` is the latest version by me.
 
 ## Contacts
 [Discord](https://discord.gg/ham)  
